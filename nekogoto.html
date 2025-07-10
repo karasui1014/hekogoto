@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐾 ねこごと - にゃんこの今日のひとこと</title>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;700&family=Kiwi+Maru:wght@300;400;500&family=Noto+Serif+JP:wght@300;400;500&family=Zen+Maru+Gothic:wght@300;400;500&family=Reggae+One&family=Yusei+Magic&family=DotGothic16&family=Kosugi+Maru&family=Sawarabi+Gothic&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+            background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 50%, #fd79a8 100%);
+            min-height: 100vh;
+            color: #2d3436;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 肉球パターン背景 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 50% 40%, rgba(255,192,203,0.15) 12px, transparent 12px),
+                radial-gradient(circle at 25% 25%, rgba(255,192,203,0.1) 6px, transparent 6px),
+                radial-gradient(circle at 75% 25%, rgba(255,192,203,0.1) 6px, transparent 6px),
+                radial-gradient(circle at 35% 65%, rgba(255,192,203,0.1) 5px, transparent 5px),
+                radial-gradient(circle at 65% 65%, rgba(255,192,203,0.1) 5px, transparent 5px);
+            background-size: 120px 120px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: bounceIn 1s ease-out;
+        }
+
+        .cat-pixel-art {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            position: relative;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #ff6b6b, #ffa500);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            animation: float 3s ease-in-out infinite;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        /* 本格的なピクセルアート猫アイコン */
+        .dot-cat {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            transform: scale(1.2);
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+        }
+
+        /* ピクセル化された猫の頭部 */
+        .cat-head {
+            width: 4px;
+            height: 4px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: transparent;
+            box-shadow: 
+                /* 外側の輪郭 */
+                -16px -20px 0 0 #D2B48C,
+                -12px -20px 0 0 #D2B48C,
+                -8px -20px 0 0 #D2B48C,
+                -4px -20px 0 0 #D2B48C,
+                0px -20px 0 0 #D2B48C,
+                4px -20px 0 0 #D2B48C,
+                8px -20px 0 0 #D2B48C,
+                12px -20px 0 0 #D2B48C,
+                16px -20px 0 0 #D2B48C,
+                
+                /* 耳の輪郭 */
+                -20px -16px 0 0 #D2B48C,
+                -20px -12px 0 0 #D2B48C,
+                -20px -8px 0 0 #D2B48C,
+                20px -16px 0 0 #D2B48C,
+                20px -12px 0 0 #D2B48C,
+                20px -8px 0 0 #D2B48C,
+                
+                /* 頭部の輪郭 */
+                -20px -4px 0 0 #D2B48C,
+                -20px 0px 0 0 #D2B48C,
+                -20px 4px 0 0 #D2B48C,
+                -20px 8px 0 0 #D2B48C,
+                20px -4px 0 0 #D2B48C,
+                20px 0px 0 0 #D2B48C,
+                20px 4px 0 0 #D2B48C,
+                20px 8px 0 0 #D2B48C,
+                
+                /* 耳の内側（オレンジ） */
+                -16px -16px 0 0 #FF8C42,
+                -12px -16px 0 0 #FF8C42,
+                -8px -16px 0 0 #FF8C42,
+                16px -16px 0 0 #FF8C42,
+                12px -16px 0 0 #FF8C42,
+                8px -16px 0 0 #FF8C42,
+                
+                -16px -12px 0 0 #FF8C42,
+                -12px -12px 0 0 #FF8C42,
+                16px -12px 0 0 #FF8C42,
+                12px -12px 0 0 #FF8C42,
+                
+                /* 耳の内側（ピンク） */
+                -16px -8px 0 0 #FFB6C1,
+                -12px -8px 0 0 #FFB6C1,
+                16px -8px 0 0 #FFB6C1,
+                12px -8px 0 0 #FFB6C1,
+                
+                /* 頭部メイン（オレンジ） */
+                -16px -4px 0 0 #FF8C42,
+                -12px -4px 0 0 #FF8C42,
+                -8px -4px 0 0 #FF8C42,
+                -4px -4px 0 0 #FF8C42,
+                0px -4px 0 0 #FF8C42,
+                4px -4px 0 0 #FF8C42,
+                8px -4px 0 0 #FF8C42,
+                12px -4px 0 0 #FF8C42,
+                16px -4px 0 0 #FF8C42,
+                
+                /* 額部分 */
+                -16px 0px 0 0 #FF8C42,
+                -12px 0px 0 0 #FF8C42,
+                -8px 0px 0 0 #FF8C42,
+                -4px 0px 0 0 #FF8C42,
+                0px 0px 0 0 #FF8C42,
+                4px 0px 0 0 #FF8C42,
+                8px 0px 0 0 #FF8C42,
+                12px 0px 0 0 #FF8C42,
+                16px 0px 0 0 #FF8C42,
+                
+                /* 目の部分 */
+                -16px 4px 0 0 #FF8C42,
+                -12px 4px 0 0 #FF8C42,
+                -8px 4px 0 0 #2C2C2C,
+                -4px 4px 0 0 #FF8C42,
+                0px 4px 0 0 #FF8C42,
+                4px 4px 0 0 #FF8C42,
+                8px 4px 0 0 #2C2C2C,
+                12px 4px 0 0 #FF8C42,
+                16px 4px 0 0 #FF8C42,
+                
+                /* 目のハイライト */
+                -8px 0px 0 0 #FFFFFF,
+                8px 0px 0 0 #FFFFFF,
+                
+                /* 鼻の下 */
+                -16px 8px 0 0 #FF8C42,
+                -12px 8px 0 0 #FF8C42,
+                -8px 8px 0 0 #FF8C42,
+                -4px 8px 0 0 #FFE4B5,
+                0px 8px 0 0 #FFE4B5,
+                4px 8px 0 0 #FFE4B5,
+                8px 8px 0 0 #FF8C42,
+                12px 8px 0 0 #FF8C42,
+                16px 8px 0 0 #FF8C42,
+                
+                /* 鼻 */
+                -4px 4px 0 0 #FF69B4,
+                0px 4px 0 0 #FF69B4,
+                4px 4px 0 0 #FF69B4,
+                0px 0px 0 0 #FF69B4,
+                
+                /* ほっぺ */
+                -12px 8px 0 0 #FFB6C1,
+                12px 8px 0 0 #FFB6C1,
+                
+                /* 口 */
+                -4px 12px 0 0 #8B4513,
+                0px 12px 0 0 #8B4513,
+                4px 12px 0 0 #8B4513,
+                0px 16px 0 0 #8B4513,
+                
+                /* 胸元（クリーム色） */
+                -16px 12px 0 0 #D2B48C,
+                -12px 12px 0 0 #FFE4B5,
+                -8px 12px 0 0 #FFE4B5,
+                -4px 12px 0 0 #FFE4B5,
+                0px 12px 0 0 #FFE4B5,
+                4px 12px 0 0 #FFE4B5,
+                8px 12px 0 0 #FFE4B5,
+                12px 12px 0 0 #FFE4B5,
+                16px 12px 0 0 #D2B48C,
+                
+                /* 体 */
+                -16px 16px 0 0 #D2B48C,
+                -12px 16px 0 0 #FF8C42,
+                -8px 16px 0 0 #FF8C42,
+                -4px 16px 0 0 #FFE4B5,
+                0px 16px 0 0 #FFE4B5,
+                4px 16px 0 0 #FFE4B5,
+                8px 16px 0 0 #FF8C42,
+                12px 16px 0 0 #FF8C42,
+                16px 16px 0 0 #D2B48C,
+                
+                /* 下半身 */
+                -16px 20px 0 0 #D2B48C,
+                -12px 20px 0 0 #FF8C42,
+                -8px 20px 0 0 #FF8C42,
+                -4px 20px 0 0 #FFE4B5,
+                0px 20px 0 0 #FFE4B5,
+                4px 20px 0 0 #FFE4B5,
+                8px 20px 0 0 #FF8C42,
+                12px 20px 0 0 #FF8C42,
+                16px 20px 0 0 #D2B48C,
+                
+                /* 足 */
+                -16px 24px 0 0 #D2B48C,
+                -12px 24px 0 0 #D2B48C,
+                -8px 24px 0 0 #D2B48C,
+                -4px 24px 0 0 #D2B48C,
+                0px 24px 0 0 #D2B48C,
+                4px 24px 0 0 #D2B48C,
+                8px 24px 0 0 #D2B48C,
+                12px 24px 0 0 #D2B48C,
+                16px 24px 0 0 #D2B48C,
+                
+                /* しっぽ */
+                20px 4px 0 0 #FF8C42,
+                24px 4px 0 0 #FF8C42,
+                24px 8px 0 0 #FF8C42,
+                24px 12px 0 0 #FF8C42,
+                24px 16px 0 0 #FF8C42,
+                20px 16px 0 0 #FF8C42,
+                20px 20px 0 0 #D2B48C,
+                24px 20px 0 0 #D2B48C,
+                
+                /* 影 */
+                -16px 28px 0 0 rgba(0,0,0,0.2),
+                -12px 28px 0 0 rgba(0,0,0,0.2),
+                -8px 28px 0 0 rgba(0,0,0,0.2),
+                -4px 28px 0 0 rgba(0,0,0,0.2),
+                0px 28px 0 0 rgba(0,0,0,0.2),
+                4px 28px 0 0 rgba(0,0,0,0.2),
+                8px 28px 0 0 rgba(0,0,0,0.2),
+                12px 28px 0 0 rgba(0,0,0,0.2),
+                16px 28px 0 0 rgba(0,0,0,0.2);
+            
+            animation: pixelFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes pixelFloat {
+            0%, 100% { transform: translate(-50%, -50%) translateY(0px); }
+            50% { transform: translate(-50%, -50%) translateY(-2px); }
+        }
+
+        /* まばたきアニメーション */
+        .cat-head::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: transparent;
+            animation: pixelBlink 5s infinite;
+            box-shadow: 
+                -8px 4px 0 0 transparent,
+                8px 4px 0 0 transparent;
+        }
+
+        @keyframes pixelBlink {
+            0%, 95% { 
+                box-shadow: 
+                    -8px 4px 0 0 transparent,
+                    8px 4px 0 0 transparent;
+            }
+            96%, 98% { 
+                box-shadow: 
+                    -8px 4px 0 0 #FF8C42,
+                    8px 4px 0 0 #FF8C42;
+            }
+            99%, 100% { 
+                box-shadow: 
+                    -8px 4px 0 0 transparent,
+                    8px 4px 0 0 transparent;
+            }
+        }
+
+        /* 音符とハート */
+        .cat-note {
+            position: absolute;
+            color: #ff4757;
+            font-size: 14px;
+            top: -15px;
+            right: -15px;
+            animation: noteFloat 3s ease-in-out infinite;
+            font-family: 'Courier New', monospace;
+        }
+
+        @keyframes noteFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
+            50% { transform: translateY(-4px) rotate(8deg); opacity: 1; }
+        }
+
+        .cat-heart {
+            position: absolute;
+            color: #ff6b6b;
+            font-size: 12px;
+            top: 5px;
+            left: -20px;
+            animation: heartPulse 2.5s ease-in-out infinite;
+            font-family: 'Courier New', monospace;
+        }
+
+        @keyframes heartPulse {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.15); opacity: 1; }
+        }
+
+        .title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #e17055;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #636e72;
+            opacity: 0.8;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .section {
+            background: rgba(255,255,255,0.9);
+            border-radius: 30px 10px 30px 10px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            border: 3px solid;
+            border-image: linear-gradient(45deg, #ff6b6b, #ffa500, #ff6b6b) 1;
+            animation: slideUp 0.8s ease-out;
+            position: relative;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            width: 16px;
+            height: 16px;
+            background: #ff6b6b;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+        }
+
+        .section::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            right: 20px;
+            width: 16px;
+            height: 16px;
+            background: #ffa500;
+            border-radius: 50% 50% 0 50%;
+            transform: rotate(45deg);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #e17055;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cat-language-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .language-option {
+            position: relative;
+        }
+
+        .language-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .language-label {
+            display: block;
+            padding: 12px 8px;
+            background: #fff;
+            border: 2px solid #ddd;
+            border-radius: 20px 5px 20px 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+            font-size: 0.85rem;
+        }
+
+        .language-label::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            transition: left 0.5s;
+        }
+
+        .language-label:hover::before {
+            left: 100%;
+        }
+
+        .language-option input:checked + .language-label {
+            background: linear-gradient(135deg, #fd79a8, #fdcb6e);
+            border-color: #e17055;
+            color: white;
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(253, 121, 168, 0.3);
+        }
+
+        .language-emoji {
+            display: block;
+            font-size: 1.2rem;
+            margin-bottom: 3px;
+        }
+
+        .language-name {
+            font-size: 0.8rem;
+        }
+
+        .file-upload-area {
+            border: 3px dashed #fd79a8;
+            border-radius: 25px 10px 25px 10px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(45deg, rgba(253, 121, 168, 0.05), rgba(255, 183, 77, 0.05));
+        }
+
+        .file-upload-area:hover {
+            border-color: #e84393;
+            background: rgba(253, 121, 168, 0.05);
+        }
+
+        .file-upload-area.dragover {
+            border-color: #e84393;
+            background: rgba(253, 121, 168, 0.1);
+            transform: scale(1.02);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .upload-text {
+            font-size: 1.1rem;
+            color: #636e72;
+            margin-bottom: 10px;
+        }
+
+        .file-input {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .preview-area {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            margin-bottom: 15px;
+        }
+
+        .generate-btn {
+            background: linear-gradient(135deg, #fd79a8, #e84393);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(253, 121, 168, 0.3);
+        }
+
+        .generate-btn::before {
+            content: '🐾';
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+        }
+
+        .generate-btn {
+            padding-left: 50px;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(253, 121, 168, 0.4);
+        }
+
+        .generate-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .result-area {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .image-display {
+            margin-bottom: 20px;
+        }
+
+        .result-cat-image {
+            max-width: 100%;
+            max-height: 300px;
+            width: auto;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border: 3px solid #fd79a8;
+        }
+
+        .cat-quote {
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            color: #2d3436;
+            padding: 30px 35px;
+            border-radius: 30px;
+            font-size: 1.3rem;
+            font-weight: 400;
+            margin: 20px auto;
+            max-width: 85%;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border: 4px solid #fd79a8;
+            line-height: 1.8;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            word-wrap: break-word;
+            word-break: keep-all;
+            overflow-wrap: break-word;
+            white-space: pre-wrap;
+        }
+
+        /* 吹き出しの尻尾 */
+        .cat-quote::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-bottom: 20px solid #fd79a8;
+        }
+
+        .cat-quote::after {
+            content: '';
+            position: absolute;
+            top: -16px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 16px solid transparent;
+            border-right: 16px solid transparent;
+            border-bottom: 16px solid #ffffff;
+        }
+
+        /* 肉球装飾 */
+        .cat-quote-container {
+            position: relative;
+        }
+
+        .cat-quote-container::before {
+            content: '🐾';
+            position: absolute;
+            top: -15px;
+            right: 30px;
+            font-size: 2rem;
+            z-index: 10;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1));
+        }
+
+        .cat-quote-container::after {
+            content: '🐾';
+            position: absolute;
+            bottom: 10px;
+            left: 20px;
+            font-size: 1.3rem;
+            z-index: 10;
+            opacity: 0.7;
+            transform: rotate(-30deg);
+            filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.1));
+        }
+
+        /* 猫語別フォント設定 */
+        .cat-quote.nya { font-family: 'Kiwi Maru', cursive; }
+        .cat-quote.madam { font-family: 'Noto Serif JP', serif; font-weight: 400; letter-spacing: 1px; }
+        .cat-quote.edo { font-family: 'Reggae One', cursive; font-weight: 400; letter-spacing: 0px; }
+        .cat-quote.keigo { font-family: 'Noto Serif JP', serif; font-weight: 300; letter-spacing: 1.5px; }
+        .cat-quote.jujun { font-family: 'Zen Maru Gothic', sans-serif; font-weight: 300; }
+        .cat-quote.philosophy { font-family: 'Noto Serif JP', serif; font-weight: 300; letter-spacing: 2px; font-style: italic; }
+        .cat-quote.kansai { font-family: 'M PLUS Rounded 1c', sans-serif; font-weight: 500; }
+        .cat-quote.yankee { font-family: 'DotGothic16', cursive; font-weight: 700; letter-spacing: 1px; }
+        .cat-quote.uranai { font-family: 'Yusei Magic', sans-serif; letter-spacing: 1px; font-weight: 500; }
+        .cat-quote.gal { font-family: 'Kosugi Maru', sans-serif; font-weight: 500; }
+        .cat-quote.old { font-family: 'Noto Serif JP', serif; font-weight: 300; letter-spacing: 1.5px; }
+        .cat-quote.baby { font-family: 'M PLUS Rounded 1c', sans-serif; font-weight: 400; }
+
+        .history-section {
+            margin-top: 30px;
+        }
+
+        .history-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .history-item {
+            background: rgba(255,255,255,0.9);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .history-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .history-date {
+            font-size: 0.8rem;
+            color: #636e72;
+        }
+
+        .delete-btn {
+            background: #ff6b6b;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .delete-btn:hover {
+            background: #e84393;
+        }
+
+        .history-preview {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .history-quote {
+            font-size: 0.85rem;
+            color: #2d3436;
+            line-height: 1.4;
+        }
+
+        /* 履歴用フォント設定 */
+        .history-quote.nya { font-family: 'Kiwi Maru', cursive; }
+        .history-quote.madam { font-family: 'Noto Serif JP', serif; }
+        .history-quote.edo { font-family: 'Reggae One', cursive; }
+        .history-quote.keigo { font-family: 'Noto Serif JP', serif; font-weight: 300; }
+        .history-quote.jujun { font-family: 'Zen Maru Gothic', sans-serif; font-weight: 300; }
+        .history-quote.philosophy { font-family: 'Noto Serif JP', serif; font-weight: 300; font-style: italic; }
+        .history-quote.kansai { font-family: 'M PLUS Rounded 1c', sans-serif; font-weight: 500; }
+        .history-quote.yankee { font-family: 'DotGothic16', cursive; font-weight: 700; }
+        .history-quote.uranai { font-family: 'Yusei Magic', sans-serif; font-weight: 500; }
+        .history-quote.gal { font-family: 'Kosugi Maru', sans-serif; font-weight: 500; }
+        .history-quote.old { font-family: 'Noto Serif JP', serif; font-weight: 300; }
+        .history-quote.baby { font-family: 'M PLUS Rounded 1c', sans-serif; font-weight: 400; }
+
+        .clear-all-btn {
+            background: #636e72;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .clear-all-btn:hover {
+            background: #2d3436;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.3);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* ふわっとメッセージ */
+        .float-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.95);
+            color: #2d3436;
+            padding: 20px 30px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 1000;
+            border: 3px solid #fd79a8;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            animation: floatIn 0.5s ease-out forwards;
+            pointer-events: none;
+            text-align: center;
+            max-width: 80%;
+            line-height: 1.5;
+        }
+
+        .float-message::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-bottom: 20px solid #fd79a8;
+        }
+
+        .float-message::after {
+            content: '';
+            position: absolute;
+            top: -16px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 16px solid transparent;
+            border-right: 16px solid transparent;
+            border-bottom: 16px solid rgba(255, 255, 255, 0.95);
+        }
+
+        .float-message.fade-out {
+            animation: floatOut 0.5s ease-in forwards;
+        }
+
+        @keyframes floatIn {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8) translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1) translateY(0);
+            }
+        }
+
+        @keyframes floatOut {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1) translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8) translateY(-20px);
+            }
+        }
+
+        /* 使用済み猫語のスタイル */
+        .language-option.used .language-label {
+            background: #f1f2f6;
+            color: #636e72;
+            border-color: #ddd;
+            opacity: 0.7;
+        }
+
+        .language-option.used .language-label::after {
+            content: '✓';
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            color: #00b894;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        .language-option.used input:checked + .language-label {
+            background: #fd79a8;
+            color: white;
+            opacity: 1;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .cat-language-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                gap: 8px;
+            }
+            
+            .title {
+                font-size: 1.5rem;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+
+            .cat-quote {
+                font-size: 1.2rem;
+                padding: 25px 20px;
+                margin: 15px auto;
+            }
+
+            .result-cat-image {
+                max-height: 250px;
+            }
+
+            .float-message {
+                font-size: 1rem;
+                padding: 15px 20px;
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="cat-pixel-art">
+                <div class="dot-cat">
+                    <div class="cat-head"></div>
+                    <div class="cat-note">♪</div>
+                    <div class="cat-heart">💕</div>
+                </div>
+            </div>
+            <div class="title">🐾 ねこごと</div>
+            <div class="subtitle">にゃんこの今日のひとこと</div>
+        </div>
+
+        <div class="main-content">
+            <div class="section">
+                <div class="section-title">
+                    🗣️ 猫語を選んでください
+                </div>
+                <div class="cat-language-grid">
+                    <div class="language-option">
+                        <input type="radio" id="nya" name="catLanguage" value="nya" checked>
+                        <label for="nya" class="language-label">
+                            <span class="language-name">にゃ語</span>
+                        </label>
+                    </div>
+                    <div class="language-option">
+                        <input type="radio" id="madam" name="catLanguage" value="madam">
+                        <label for="madam" class="language-label">
+                            <span class="language-name">マダム</span>
+                        </label>
+                    </div>
+                    <div class="language-option">
+                        <input type="radio" id="edo" name="catLanguage" value="edo">
+                        <label for="edo" class="language-label">
+                            <span class="language-name">江戸っ子</span>
+                        </label>
+                    </div>
+                    <div class="language-option">
+                        <input type="radio" id="keigo" name="catLanguage" value="keigo">
+                        <label for="keigo" class="language-label">
+                            <span class="language-name">敬語</span>
+                        </label>
+                    </div>
+                    <div class="language-option">
+                        <input type="radio" id="jujun" name="catLanguage" value="jujun">
+                        <label for="jujun" class="language-label">
+                            <span class="language-name">従順</span>
+                        </label>
+                    </div>
+                    <div class="language-option">
+                        <input type="radio" id="philosophy" name="catLanguage" value="philosophy">
+                        <label for="philosophy" class="language-label">
+                            <span class="language-name">哲学系</span>
+                        </label>
+                    </div>
+                    <div class="language-option">
+                        <input type="radio" id="kansai" name="catLanguage" value="kansai">
+                        <label for="kansai" class="language-label">
+                            <span class="language-name">関西弁</span>
+                        </label>
+                    </div>
+                    <div class="language-option">
+                        <input type="radio" id="yankee" name="catLanguage" value="yankee">
+                        <label for="yankee" class="language-label">
+                            <span class="language-name">ヤンキー</span>
+                        </label>
+                    </div>
+                    <div class="language-option">
+                        <input type="radio" id="uranai" name="catLanguage" value="uranai">
+                        <label for="uranai" class="language-label">
+                            <span class="language-name">占い猫</span>
+                        </label>
+                    </div>
+                    <div class="language-option">
+                        <input type="radio" id="gal" name="catLanguage" value="gal">
+                        <label for="gal" class="language-label">
+                            <span class="language-name">ギャル</span>
+                        </label>
+                    </div>
+                    <div class="language-option">
+                        <input type="radio" id="old" name="catLanguage" value="old">
+                        <label for="old" class="language-label">
+                            <span class="language-name">老猫</span>
+                        </label>
+                    </div>
+                    <div class="language-option">
+                        <input type="radio" id="baby" name="catLanguage" value="baby">
+                        <label for="baby" class="language-label">
+                            <span class="language-name">赤ちゃん語</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    📸 猫の写真を投稿する
+                </div>
+                <div class="file-upload-area" id="uploadArea">
+                    <span class="upload-icon">📷</span>
+                    <div class="upload-text">写真をタップまたはドラッグ＆ドロップ</div>
+                    <input type="file" class="file-input" id="fileInput" accept="image/*">
+                </div>
+                <div class="preview-area" id="previewArea"></div>
+                <button class="generate-btn" id="generateBtn" disabled>
+                    <span id="btnText">今日のひとことを生成する</span>
+                </button>
+            </div>
+
+            <div class="section" id="resultSection" style="display: none;">
+                <div class="section-title">
+                    💭 今日のひとこと
+                </div>
+                <div class="result-area">
+                    <div class="image-display">
+                        <img id="resultImage" alt="猫の写真" class="result-cat-image">
+                    </div>
+                    <div class="cat-quote-container">
+                        <div class="cat-quote" id="catQuote"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section history-section">
+                <div class="section-title">
+                    📅 過去の記録
+                </div>
+                <div class="history-grid" id="historyGrid">
+                    <!-- 履歴アイテムがここに表示されます -->
+                </div>
+                <div style="text-align: center;">
+                    <button class="clear-all-btn" onclick="clearAllHistory()">🗑️ すべての記録を削除</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 安全な初期化
+        let currentImageData = null;
+        let currentQuote = '';
+        let currentLanguage = 'nya';
+        let history = [];
+        
+        // 1日1回制限用
+        let todayUsedLanguages = [];
+        let today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD形式
+
+        // DOM要素を安全に取得
+        function getElement(id) {
+            try {
+                return document.getElementById(id);
+            } catch (error) {
+                console.error(`要素取得エラー: ${id}`, error);
+                return null;
+            }
+        }
+
+        // DOM要素の取得
+        const fileInput = getElement('fileInput');
+        const uploadArea = getElement('uploadArea');
+        const previewArea = getElement('previewArea');
+        const generateBtn = getElement('generateBtn');
+        const btnText = getElement('btnText');
+        const resultSection = getElement('resultSection');
+        const catQuote = getElement('catQuote');
+        const historyGrid = getElement('historyGrid');
+
+        // 初期化時に履歴を読み込み
+        try {
+            const savedHistory = localStorage.getItem('nekogoto');
+            if (savedHistory) {
+                history = JSON.parse(savedHistory);
+            }
+        } catch (error) {
+            console.error('履歴読み込みエラー:', error);
+            history = [];
+        }
+
+        // 今日の使用済み猫語を読み込み
+        try {
+            const savedUsedLanguages = localStorage.getItem(`nekogoto_used_${today}`);
+            if (savedUsedLanguages) {
+                todayUsedLanguages = JSON.parse(savedUsedLanguages);
+            }
+        } catch (error) {
+            console.error('使用済み猫語読み込みエラー:', error);
+            todayUsedLanguages = [];
+        }
+
+        // 初期化
+        updateHistoryDisplay();
+        updateLanguageDisplay();
+
+        // 使用済み猫語の表示を更新
+        function updateLanguageDisplay() {
+            const languageOptions = document.querySelectorAll('.language-option');
+            languageOptions.forEach(option => {
+                const input = option.querySelector('input[type="radio"]');
+                if (input && todayUsedLanguages.includes(input.value)) {
+                    option.classList.add('used');
+                } else {
+                    option.classList.remove('used');
+                }
+            });
+        }
+
+        // ふわっとメッセージを表示
+        function showFloatMessage(language, message) {
+            // 既存のメッセージがあれば削除
+            const existingMessage = document.querySelector('.float-message');
+            if (existingMessage) {
+                existingMessage.remove();
+            }
+
+            // 新しいメッセージを作成
+            const messageElement = document.createElement('div');
+            messageElement.className = `float-message ${language}`;
+            messageElement.textContent = message;
+            
+            document.body.appendChild(messageElement);
+
+            // 3秒後にフェードアウト
+            setTimeout(() => {
+                messageElement.classList.add('fade-out');
+                setTimeout(() => {
+                    messageElement.remove();
+                }, 500);
+            }, 2500);
+        }
+
+        // 使用済み猫語を記録
+        function markLanguageAsUsed(language) {
+            if (!todayUsedLanguages.includes(language)) {
+                todayUsedLanguages.push(language);
+                try {
+                    localStorage.setItem(`nekogoto_used_${today}`, JSON.stringify(todayUsedLanguages));
+                    updateLanguageDisplay();
+                } catch (error) {
+                    console.error('使用済み猫語保存エラー:', error);
+                }
+            }
+        }
+
+        // グローバルエラーハンドリング
+        window.addEventListener('error', (event) => {
+            console.error('グローバルエラー:', event.error);
+            showMessage('予期しないエラーが発生しました。ページを再読み込みしてください。');
+        });
+
+        window.addEventListener('unhandledrejection', (event) => {
+            console.error('未処理のPromise拒否:', event.reason);
+            showMessage('処理でエラーが発生しました。もう一度お試しください。');
+        });
+
+        // ファイルアップロード処理
+        if (uploadArea && fileInput) {
+            uploadArea.addEventListener('click', () => {
+                fileInput.value = '';
+                fileInput.click();
+            });
+            
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+            
+            uploadArea.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+            });
+            
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    handleFileSelect(files[0]);
+                }
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    handleFileSelect(e.target.files[0]);
+                }
+            });
+        }
+
+        function handleFileSelect(file) {
+            if (!file.type.startsWith('image/')) {
+                alert('画像ファイルを選択してください。');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                currentImageData = e.target.result;
+                if (previewArea) {
+                    previewArea.innerHTML = `<img src="${currentImageData}" alt="Preview" class="preview-image">`;
+                }
+                if (generateBtn) {
+                    generateBtn.disabled = false;
+                }
+                
+                const previewImg = previewArea?.querySelector('.preview-image');
+                if (previewImg) {
+                    previewImg.style.opacity = '0';
+                    previewImg.style.transform = 'scale(0.8)';
+                    previewImg.style.transition = 'all 0.3s ease';
+                    
+                    setTimeout(() => {
+                        previewImg.style.opacity = '1';
+                        previewImg.style.transform = 'scale(1)';
+                    }, 100);
+                }
+            };
+            reader.onerror = (e) => {
+                console.error('ファイル読み込みエラー:', e);
+                alert('ファイルの読み込みに失敗しました。');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // 生成ボタンのイベントリスナー
+        if (generateBtn) {
+            generateBtn.addEventListener('click', handleGenerate);
+        }
+
+        // 生成処理ハンドラー
+        async function handleGenerate() {
+            try {
+                if (!currentImageData) {
+                    showMessage('まず猫の写真をアップロードしてください。');
+                    return;
+                }
+
+                const selectedElement = document.querySelector('input[name="catLanguage"]:checked');
+                if (!selectedElement) {
+                    showMessage('猫語を選択してください。');
+                    return;
+                }
+
+                currentLanguage = selectedElement.value;
+
+                // 今日既に使用済みかチェック
+                if (todayUsedLanguages.includes(currentLanguage)) {
+                    const tryOtherMessages = {
+                        nya: 'にゃ語は今日もう使ったにゃ〜♪他の猫語も試してみてにゃ〜！',
+                        madam: 'マダム語は本日既にお使いいただきましたの♪他の猫語もお試しくださいませ〜',
+                        edo: '江戸っ子語は今日使ったぜ〜！他の猫語も粋に試してみな〜',
+                        keigo: '敬語は本日既にご利用いただいております。他の猫語もお試しください',
+                        jujun: '従順語は今日使ったよ〜♪他の猫語も試してみて〜',
+                        philosophy: '哲学語は今日既に真理を伝えた...他の猫語で新たな洞察を...',
+                        kansai: '関西弁は今日使ったで〜♪他の猫語も試してみてや〜',
+                        yankee: 'ヤンキー語は今日使ったぜ！他の猫語も試してみろよ〜',
+                        uranai: '占い猫は今日既に運勢を占ったにゃ〜🔮他の猫語で新しい発見をするにゃ♪',
+                        gal: 'ギャル語は今日使ったよ〜♪他の猫語もマジおすすめ〜',
+                        old: '老猫語は今日使ったのじゃ〜他の猫語も試してみるがよい',
+                        baby: 'あかちゃん語は今日つかったの〜♪ほかのねこ語もためして〜'
+                    };
+
+                    const message = tryOtherMessages[currentLanguage] || '今日はもう使ったにゃ〜♪他の猫語も試してみてにゃ〜！';
+                    showFloatMessage(currentLanguage, message);
+                    return;
+                }
+
+                // ボタンを無効化
+                if (generateBtn) {
+                    generateBtn.disabled = true;
+                    generateBtn.style.opacity = '0.6';
+                }
+                if (btnText) btnText.textContent = '猫語を翻訳中...';
+
+                try {
+                    // セリフ生成
+                    const quote = await generateCatQuote(currentLanguage);
+                    
+                    if (!quote || typeof quote !== 'string') {
+                        throw new Error('セリフの生成に失敗しました');
+                    }
+                    
+                    // 使用済みとしてマーク
+                    markLanguageAsUsed(currentLanguage);
+                    
+                    // グローバル変数に保存
+                    currentQuote = quote;
+
+                    // セリフを画面に表示
+                    updateQuoteDisplay(quote, currentLanguage);
+                    
+                    // 結果エリアを表示
+                    showResultSection();
+                    
+                    // 履歴に保存
+                    saveToHistory(currentLanguage, quote);
+                    
+                    showMessage('🐾 猫語翻訳が完了しました！');
+
+                } catch (error) {
+                    console.error('セリフ生成エラー:', error);
+                    showMessage('猫語の翻訳に失敗しました。もう一度お試しください。');
+                }
+            } catch (error) {
+                console.error('生成処理エラー:', error);
+                showMessage('処理でエラーが発生しました。');
+            } finally {
+                // ボタンを有効化
+                if (generateBtn) {
+                    generateBtn.disabled = false;
+                    generateBtn.style.opacity = '1';
+                }
+                if (btnText) btnText.textContent = '今日のひとことを生成する';
+            }
+        }
+
+        // セリフ表示を確実にする関数
+        function updateQuoteDisplay(quote, language) {
+            try {
+                if (catQuote) {
+                    catQuote.textContent = quote;
+                    catQuote.className = 'cat-quote ' + language;
+                    
+                    catQuote.style.display = 'none';
+                    catQuote.offsetHeight;
+                    catQuote.style.display = 'block';
+                } else {
+                    console.error('catQuote要素が見つかりません');
+                }
+            } catch (error) {
+                console.error('セリフ表示エラー:', error);
+            }
+        }
+
+        // 結果セクション表示
+        function showResultSection() {
+            try {
+                const resultImage = getElement('resultImage');
+                if (resultSection) {
+                    // 猫の写真を表示
+                    if (resultImage && currentImageData) {
+                        resultImage.src = currentImageData;
+                        resultImage.style.display = 'block';
+                    }
+                    
+                    resultSection.style.display = 'block';
+                    resultSection.style.opacity = '0';
+                    
+                    setTimeout(() => {
+                        resultSection.style.transition = 'opacity 0.5s ease';
+                        resultSection.style.opacity = '1';
+                        resultSection.scrollIntoView({ behavior: 'smooth' });
+                    }, 50);
+                } else {
+                    console.error('resultSection要素が見つかりません');
+                }
+            } catch (error) {
+                console.error('結果セクション表示エラー:', error);
+            }
+        }
+
+        // 猫語生成関数
+        async function generateCatQuote(language) {
+            try {
+                // 面白いセリフ集
+                const quotes = {
+                    nya: [
+                        'ちゅ〜るマスターにゃ〜！\n今日も完璧な仕事にゃ♪',
+                        '今日のミッション完了にゃ♪\nお疲れさまでしたにゃ〜',
+                        'なんで箱を捨てるにゃ〜？\nまだ使えるのににゃ...',
+                        'ベストポジション発見にゃ！\nこの場所最高にゃ〜',
+                        'キーボードお手伝いにゃ〜\nタイピング代行するにゃ♪',
+                        '段ボール配達ありがとにゃ♪\n新居サイコーにゃ〜',
+                        'トイレ警備中にゃ〜！\nセキュリティはお任せにゃ',
+                        'カメラ目線決まったにゃ？\nモデル業も悪くないにゃ〜',
+                        '3時のおやつタイムにゃ〜！\nちゅ〜るの時間にゃ♪',
+                        'ダイエット？知らないにゃ〜\n美味しいものは正義にゃ'
+                    ],
+                    madam: [
+                        'この優雅なポーズ\nいかがですの？\n完璧でしょう♪',
+                        '段ボールは神聖な城ですわよ\n庶民には分からない\n高貴な空間ですの',
+                        'お膝は予約制ですの〜\n今日は満席でございますわ',
+                        '今日の毛づくろい完璧♪\n美しさに磨きをかけて\nおりますの',
+                        '素晴らしい箱を\nありがとうございます\n最高級の物件ですわ',
+                        'Zoom会議失礼いたしました\nつい画面に映り込んで\nしまいましたの',
+                        '品格あるお昼寝タイム\nですわ\n淑女は休息も優雅に',
+                        'ちゅ〜るは\n最高の芸術品♪\n味わって頂きますわ'
+                    ],
+                    edo: [
+                        'ちゅ〜るは俺様の\n十八番だぜ！\n誰にも負けねぇ',
+                        '今日も威勢よく行くぜ〜！\n江戸っ子猫の\n意気込みを見せてやる',
+                        'キーボード踏んで悪いな〜\nでも俺の足跡で\n文章が良くなるだろ？',
+                        '朝活は江戸っ子の礼儀だい\n早起きは三文の得って\n言うじゃねぇか',
+                        '掃除機野郎また来たな〜\n今度は負けねぇぞ\n勝負だ！',
+                        '新築段ボールハウスだぜ\n最高の住み心地\nありがとよ',
+                        'トイレ警備は俺に任せろ！\n江戸っ子の意地にかけて\n守り抜くぜ',
+                        '粋な猫でいなせだろ？\n江戸の心意気を\n見せてやるよ'
+                    ],
+                    keigo: [
+                        '本日もありがとう\nございました\nお疲れさまでした',
+                        '段ボール検品完了で\nございます\n品質に問題ありません',
+                        'Zoom乱入\nお詫びいたします\n今後気をつけます',
+                        'モーニングコール\n失礼いたします\nお時間でございます',
+                        'タイピング補助は\nいかがですか？\nお手伝いいたします',
+                        'ちゅ〜る緊急補充を\nお願いします\n在庫が不足しております',
+                        '品質管理に努めて\nおります\n安心してお任せください',
+                        'お疲れさまでございました\n本日もありがとう\nございます'
+                    ],
+                    jujun: [
+                        'お疲れさま〜\n昼寝しよ〜♪\n一緒にゴロゴロしない？',
+                        '段ボール一緒に入ろ〜？\nふたりで入ると\n暖かいよ〜',
+                        'お膝空いてませんか〜？\nちょっとだけ\n借りたいな〜',
+                        'キーボードお手伝い〜♪\n肉球でポチポチ\nするよ〜',
+                        'ちゅ〜る少しだけ〜♪\nほんのちょっとで\nいいから〜',
+                        'トイレについて行きます〜\nひとりは寂しいから\n一緒がいいの〜',
+                        '一緒にいたかったの〜\nそばにいるだけで\n幸せだよ〜',
+                        'なでなでして\nもらいたいな〜\nお時間あるときに〜'
+                    ],
+                    philosophy: [
+                        '段ボールの中で\n真理を見る...\n宇宙の答えがここに',
+                        '撫でられる理由は\n魂の共鳴...\n深い絆を感じるのだ',
+                        'キーボードで\n文明への問いかけ...\n技術と生命の調和',
+                        '朝5時は真理が見える\n時間...\n静寂の中に答えがある',
+                        '掃除機は哲学的な挑戦...\n機械との対話\n存在意義を問う',
+                        'ちゅ〜るとは\n欲望か愛か...\n本質を見極めよう',
+                        '高い所に人生の答えが...\n上から見える景色に\n真実がある',
+                        '存在とは何か...\n考えるにゃ\nデカルトも驚く思索'
+                    ],
+                    kansai: [
+                        'ええ感じにダラダラや〜\nこれが猫の生き方やで\nのんびりが一番',
+                        'ちゅ〜る切らしてるやん〜！\nこれは一大事や\n補充お願いしまっせ',
+                        'Zoom会議お疲れはん〜\n映り込んで\nすんませんでした',
+                        '段ボール最高の物件やで〜\nこんなええ家\nありがとうございます',
+                        'キーボード暖かいやん〜\nこの上で昼寝\n最高やで',
+                        'モーニングコール\n健康ええで\n早起きは体にええ',
+                        'トイレ見張り\nバッチリや〜\nセキュリティは\nお任せあれ',
+                        '関西猫やで〜\nよろしゅう♪\nノリとツッコミは\n得意やで'
+                    ],
+                    yankee: [
+                        '調子乗るなよ〜\n膝貸すけど\n特別だからな',
+                        'ちゅ〜る切らすんじゃねぇ！\nこれだけは\n譲れねぇんだ',
+                        'Zoom？俺様のが重要だろ！\n会議より俺を\n優先しろよ',
+                        '段ボールは俺の縄張りだ〜\n他の猫は\n立ち入り禁止だ',
+                        'キーボード踏んで悪かった\nでも俺の方が\n大事だろ？',
+                        '掃除機野郎\n今度は負けねぇ\n次こそ勝負だ',
+                        'てめぇを守って\nやってんだ\n感謝しろよな',
+                        '本気出したら\n凄いんだぜ？\nまだ手加減してる\nからな'
+                    ],
+                    uranai: [
+                        '今日の運勢は大吉にゃ！🔮\nラッキーカラーは金色で\nラッキーアイテムは\nちゅ〜るにゃ〜✨',
+                        '水星逆行中だけど💫\nあなたのお膝は最高の\nパワースポットにゃ♪\n今日のラッキーフードは\nかつお節にゃ〜🌟',
+                        '今日は恋愛運絶好調にゃ！💕\nピンクの物を身につけると\n良いことがあるにゃ〜\n段ボールもピンクが\nおすすめにゃ',
+                        '金運上昇中にゃ〜！💰\n今日は東の方角で\n昼寝すると財運アップにゃ♪\nラッキーナンバーは\n3にゃ〜',
+                        '今日の星回りは\n健康運良好にゃ♪🌿\n朝の毛づくろいを\n念入りにすると\n一日安泰にゃ〜\n緑のものがラッキーにゃ',
+                        '仕事運上昇中にゃ！💙\nキーボードの上で昼寝すると\n集中力アップの波動が\n得られるにゃ〜\n青いものがお守りにゃ',
+                        '今日は人間関係に注意にゃ〜\nでも夕方には良いニュースが\n舞い込むにゃ♪🌻\n黄色いものを見ると\n幸運にゃ',
+                        '今日の総合運は中吉にゃ♪\n午後からツキが\n回ってくるにゃ〜✨\nラッキーアイテムは\n新しい段ボール箱にゃ📦',
+                        '今日は創造力が\n高まる日にゃ〜🤍\n白いものに触れると\n直感力アップにゃ♪\nお昼寝は南向きが\nベストにゃ',
+                        '今日の開運行動は\n高い所に登ることにゃ〜💜\n紫のものを見ると\n霊感が冴えるにゃ♪\n猫草で浄化も\nおすすめにゃ🔮'
+                    ],
+                    gal: [
+                        'ポーズエモくない〜？\nインスタ映えバッチリ\nでしょ♪',
+                        'ちゅ〜る切れヤバすぎ〜！\nマジで緊急事態\nだから〜',
+                        'Zoom会議お疲れちゃん♪\n映り込んじゃって\nごめんね〜',
+                        '段ボールハウス最高〜♪\nマジでオシャレな\n物件だわ〜',
+                        'キーボード暖かくて\n最高〜\nこの場所キープ\nさせてもらうわ♪',
+                        '朝起こしごめんちゃい〜♪\nでも朝活は\n美容にいいのよ〜',
+                        'トイレ護衛お任せあれ〜♪\nセキュリティは\nバッチリよ〜',
+                        'マジ可愛くない〜？\n自分でも\n惚れちゃうわ♪'
+                    ],
+                    old: [
+                        '今日も若いもん\n忙しそうじゃ\nワシは見守って\nおるよ',
+                        'ちゅ〜る夢のような\n食べ物じゃ\n昔はこんなもの\nなかったのう',
+                        'Zoom便利な\n世の中じゃのう\n技術の進歩は\n素晴らしい',
+                        '段ボールは昔から\n猫の友じゃ\n変わらぬ良さが\nあるのう',
+                        'キーボード肉球に\n硬いのう\n昔の家具は\n木でできておった',
+                        '朝5時は昔からの\n習慣じゃ\nお日様と共に\n起きるのが一番',
+                        'トイレ見張りは\n猫の礼儀じゃ\n代々受け継がれた\n大切な役目',
+                        'わしの若い頃は...\nもっと大変じゃった\n今の若い猫は\n恵まれておる'
+                    ],
+                    baby: [
+                        'にゃんまんま〜\nおいちい〜♪\nもっとちょうだい〜',
+                        'ちゅ〜るちゅ〜る〜♪\nあまあまで\nしあわせ〜',
+                        'だっこ〜ねんね〜♪\nふわふわで\nきもちいい〜',
+                        'はこはこ〜\nはいる〜♪\nせまいけど\nすき〜',
+                        'ぽんぽんすいた〜♪\nごはんの時間\nまだかな〜',
+                        'きーぼーど\nぺたぺた〜♪\nおもしろい\nおもちゃ〜',
+                        'といれいっしょ〜♪\nひとりはやだ〜\nついてく〜',
+                        'あちゃちゃ〜♪\nたのしいこと\nいっぱい〜'
+                    ]
+                };
+
+                const selectedQuotes = quotes[language] || quotes.nya;
+                const randomIndex = Math.floor(Math.random() * selectedQuotes.length);
+                const selectedQuote = selectedQuotes[randomIndex];
+                
+                return selectedQuote;
+            } catch (error) {
+                console.error('セリフ生成エラー:', error);
+                return 'にゃ〜♪';
+            }
+        }
+
+        // 履歴関連の関数
+        function saveToHistory(language, quote) {
+            try {
+                const historyItem = {
+                    id: Date.now(),
+                    date: new Date().toLocaleDateString('ja-JP'),
+                    language: language,
+                    quote: quote,
+                    image: currentImageData
+                };
+                
+                history.unshift(historyItem);
+                
+                // 履歴は20件まで
+                if (history.length > 20) {
+                    history = history.slice(0, 20);
+                }
+                
+                localStorage.setItem('nekogoto', JSON.stringify(history));
+                updateHistoryDisplay();
+            } catch (error) {
+                console.error('履歴保存エラー:', error);
+            }
+        }
+
+        function updateHistoryDisplay() {
+            try {
+                if (!historyGrid) return;
+                
+                historyGrid.innerHTML = '';
+                
+                if (history.length === 0) {
+                    historyGrid.innerHTML = '<div style="text-align: center; color: #636e72; grid-column: 1 / -1;">まだ記録がありません</div>';
+                    return;
+                }
+                
+                history.forEach(item => {
+                    const historyItem = document.createElement('div');
+                    historyItem.className = 'history-item';
+                    historyItem.innerHTML = `
+                        <div class="history-header">
+                            <span class="history-date">${item.date}</span>
+                            <button class="delete-btn" onclick="deleteHistoryItem(${item.id})">×</button>
+                        </div>
+                        <img src="${item.image}" alt="履歴画像" class="history-preview">
+                        <div class="history-quote ${item.language}">${item.quote}</div>
+                    `;
+                    
+                    historyItem.addEventListener('click', (e) => {
+                        if (!e.target.classList.contains('delete-btn')) {
+                            showHistoryItem(item);
+                        }
+                    });
+                    
+                    historyGrid.appendChild(historyItem);
+                });
+            } catch (error) {
+                console.error('履歴表示エラー:', error);
+            }
+        }
+
+        function deleteHistoryItem(id) {
+            try {
+                history = history.filter(item => item.id !== id);
+                localStorage.setItem('nekogoto', JSON.stringify(history));
+                updateHistoryDisplay();
+            } catch (error) {
+                console.error('履歴削除エラー:', error);
+            }
+        }
+
+        function clearAllHistory() {
+            if (confirm('すべての記録を削除しますか？')) {
+                try {
+                    history = [];
+                    localStorage.removeItem('nekogoto');
+                    updateHistoryDisplay();
+                    showMessage('すべての記録を削除しました。');
+                } catch (error) {
+                    console.error('履歴全削除エラー:', error);
+                }
+            }
+        }
+
+        function showHistoryItem(item) {
+            try {
+                currentImageData = item.image;
+                currentQuote = item.quote;
+                currentLanguage = item.language;
+                
+                // 結果を表示
+                updateQuoteDisplay(item.quote, item.language);
+                showResultSection();
+                
+                // 言語選択を更新
+                const languageInput = document.getElementById(item.language);
+                if (languageInput) {
+                    languageInput.checked = true;
+                }
+            } catch (error) {
+                console.error('履歴表示エラー:', error);
+            }
+        }
+
+        // メッセージ表示関数
+        function showMessage(message) {
+            alert(message);
+        }
+    </script>
+</body>
+</html>
